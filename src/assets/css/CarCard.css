@@ -1,0 +1,164 @@
+.auto-car-card {
+  overflow: hidden;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.auto-car-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.14);
+}
+
+.featured-cars__item {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: carCardFadeUp 0.55s ease forwards;
+}
+
+.auto-car-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #111827;
+}
+
+.auto-car-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.auto-car-card:hover .auto-car-card__image {
+  transform: scale(1.04);
+}
+
+.auto-car-card__heart {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  color: #111827;
+  background: rgba(255, 255, 255, 0.92);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.auto-car-card__heart:hover,
+.auto-car-card__heart:focus,
+.auto-car-card__heart.active {
+  color: #ffffff;
+  background: #dc3545;
+  transform: translateY(-1px);
+}
+
+.auto-car-card__body {
+  display: flex;
+  min-height: 260px;
+  flex-direction: column;
+  padding: 1.15rem;
+  text-align: center;
+}
+
+.auto-car-card__title {
+  margin-bottom: 0.55rem;
+  color: #111827;
+  font-size: 1.22rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.auto-car-card__meta {
+  min-height: 42px;
+  margin-bottom: 0.85rem;
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.auto-car-card__features {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  color: #111827;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  list-style: none;
+}
+
+.auto-car-card__actions {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 0.6rem;
+  margin-top: auto;
+}
+
+.auto-car-card__action {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.75rem;
+  color: #111827;
+  background: #ffffff;
+  border: 1px solid #111827;
+  border-radius: 8px;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.auto-car-card__action:hover,
+.auto-car-card__action:focus {
+  color: #ffffff;
+  background: #111827;
+  transform: translateY(-1px);
+}
+
+.auto-car-card__action--added {
+  color: #ffffff;
+  background: #198754;
+  border-color: #198754;
+}
+
+.auto-car-card__action--added:hover,
+.auto-car-card__action--added:focus {
+  color: #ffffff;
+  background: #157347;
+  border-color: #157347;
+}
+
+.auto-car-card__action--details {
+  color: #ffffff;
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.auto-car-card__action--details:hover,
+.auto-car-card__action--details:focus {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+@media (max-width: 575px) {
+  .auto-car-card__actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes carCardFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,12 +1,11 @@
 import React from "react";
-import { motion } from "framer-motion";
-import CarData from "../data/carData";
+import CarData from "../data/CarData";
+import CarCard from "./CarCard";
 
 const featuredCars = CarData.slice(0, 24);
-
-// Divide into chunks of 4 cars per slide
 const chunkSize = 4;
 const slides = [];
+
 for (let i = 0; i < featuredCars.length; i += chunkSize) {
   slides.push(featuredCars.slice(i, i + chunkSize));
 }
@@ -32,47 +31,12 @@ function FeatureCar() {
                   <div className="row g-4 justify-content-center">
                     {slide.map((car, carIndex) => (
                       <div key={car.id} className="col-md-3 col-sm-6">
-                        <motion.div
-                          className="card car-card shadow-sm h-100 border-0"
-                          initial={{ opacity: 0, y: 30 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{
-                            duration: 0.5,
-                            delay: carIndex * 0.1,
-                          }}
-                          whileHover={{
-                            scale: 1.05,
-                            boxShadow: "0 15px 25px rgba(0,0,0,0.2)",
-                          }}
+                        <div
+                          className="featured-cars__item"
+                          style={{ animationDelay: `${carIndex * 0.1}s` }}
                         >
-                          <img
-                            src={car.image}
-                            className="card-img-top"
-                            alt={`${car.brand} ${car.name}`}
-                            style={{
-                              height: "200px",
-                              objectFit: "cover",
-                              borderRadius: "10px 10px 0 0",
-                            }}
-                          />
-                          <div className="card-body d-flex flex-column">
-                            <h5 className="card-title text-center mb-2">
-                              {car.brand} {car.name}
-                            </h5>
-                            <p className="card-text text-center text-muted small mb-3">
-                              {car.price} — {car.description}
-                            </p>
-                            {car.features && car.features.length > 0 && (
-                              <ul className="list-unstyled text-center small mb-3">
-                                {car.features
-                                  .slice(0, 3)
-                                  .map((feature, index) => (
-                                    <li key={index}>{feature}</li>
-                                  ))}
-                              </ul>
-                            )}
-                          </div>
-                        </motion.div>
+                          <CarCard car={car} />
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -80,7 +44,6 @@ function FeatureCar() {
               ))}
             </div>
 
-            {/* Prev / Next Buttons */}
             <button
               className="carousel-control-prev"
               type="button"

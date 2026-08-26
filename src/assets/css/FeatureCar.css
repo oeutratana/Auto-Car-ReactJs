@@ -7,34 +7,6 @@
   animation: fadeUp 0.8s ease-out forwards;
 }
 
-/* Car Card entrance animation */
-.car-card {
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 0.8s ease-out forwards;
-}
-
-/* Staggered animation for cards (delay by order) */
-.col-md-3:nth-child(1) .car-card {
-  animation-delay: 0.1s;
-}
-.col-md-3:nth-child(2) .car-card {
-  animation-delay: 0.2s;
-}
-.col-md-3:nth-child(3) .car-card {
-  animation-delay: 0.3s;
-}
-.col-md-3:nth-child(4) .car-card {
-  animation-delay: 0.4s;
-}
-
-/* Hover lift with glow */
-.car-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-}
-
 /* Smooth fadeUp keyframe */
 @keyframes fadeUp {
   from {

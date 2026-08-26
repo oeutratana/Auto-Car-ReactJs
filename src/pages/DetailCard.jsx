@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import CarData from "../data/carData";
+import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import CarData from "../data/CarData";
+import {
+  addStoredCarId,
+  CART_STORAGE_KEY,
+  FAVORITES_STORAGE_KEY,
+  getStoredCarIds,
+  toggleStoredCarId,
+} from "../utils/shopStorage";
+import "../assets/css/DetailCard.css";
 
 function DetailCard() {
   const { id } = useParams();
   const navigate = useNavigate();
   const car = CarData.find((c) => c.id === parseInt(id));
+  const carId = Number(id);
+  const [isFavorite, setIsFavorite] = useState(() =>
+    getStoredCarIds(FAVORITES_STORAGE_KEY).includes(carId)
+  );
+  const [isInCart, setIsInCart] = useState(() =>
+    getStoredCarIds(CART_STORAGE_KEY).includes(carId)
+  );
 
   if (!car) {
     return (
@@ -18,8 +34,17 @@ function DetailCard() {
     );
   }
 
+  const handleFavorite = () => {
+    setIsFavorite(toggleStoredCarId(FAVORITES_STORAGE_KEY, car.id));
+  };
+
+  const handleAddCart = () => {
+    addStoredCarId(CART_STORAGE_KEY, car.id);
+    setIsInCart(true);
+  };
+
   return (
-    <div className="container py-5 font-text">
+    <div className="container py-5 font-text detail-card-page">
       <div className="row g-4 align-items-center">
         {/* 🖼️ Car Image */}
         <div className="col-md-6">
@@ -54,10 +79,30 @@ function DetailCard() {
           )}
 
           {/* Buttons */}
-          <div className="d-flex gap-3">
-            <Link to="/cars" className="btn btn-outline-secondary">
+          <div className="detail-actions">
+            {/* <Link to="/cars" className="btn btn-outline-secondary">
               Back
-            </Link>
+            </Link> */}
+            {/* <button
+              type="button"
+              className={`btn detail-icon-btn ${
+                isFavorite ? "detail-icon-btn--favorite active" : ""
+              }`}
+              onClick={handleFavorite}
+            >
+              <FaHeart aria-hidden="true" />
+              <span>{isFavorite ? "Saved" : "Heart"}</span>
+            </button> */}
+            <button
+              type="button"
+              className={`btn detail-icon-btn ${
+                isInCart ? "detail-icon-btn--cart active" : ""
+              }`}
+              onClick={handleAddCart}
+            >
+              <FaShoppingCart aria-hidden="true" />
+              <span>{isInCart ? "In Cart" : "Add Cart"}</span>
+            </button>
             <button
               type="button"
               className="btn btn-primary"
