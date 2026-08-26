@@ -12,7 +12,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Car from "./pages/Car";
 import About from "./pages/About";
-import Contact from "./pages/contact";
+import Contact from "./pages/Contact";
 import DetailCard from "./pages/DetailCard";
 import PaymentPage from "./pages/PaymentPage";
 import PaymentQR from "./pages/PaymentQR";
