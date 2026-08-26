@@ -25,9 +25,9 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 
 // Admin
-import Dashboard from "./admin/Dashboard";
-import Overview from "./admin/Overview";
-import Settings from "./admin/Settings";
+import Dashboard from "./Admin/Dashboard";
+import Overview from "./Admin/Overview";
+import Settings from "./Admin/Settings";
 
 
 // Website Layout
