@@ -10,7 +10,7 @@ import Footer from "./components/Footer";
 
 // Pages
 import Home from "./pages/Home";
-import Car from "./pages/car";
+import Car from "./pages/Car";
 import About from "./pages/About";
 import Contact from "./pages/contact";
 import DetailCard from "./pages/DetailCard";
