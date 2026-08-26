@@ -2,7 +2,7 @@ import React from "react";
 import "../assets/css/Home.css";
 import CarData from "../data/CarData";
 import About from "./About";
-import Contact from "./contact";
+import Contact from "./Contact";
 import FeatureCar from "../components/FeatureCar";
 
 const featuredCars = CarData.slice(0, 24);
