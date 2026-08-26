@@ -6,8 +6,10 @@ import {
   FaSearch,
   FaShoppingCart,
   FaSignInAlt,
+  FaUser,
   FaUserPlus,
 } from "react-icons/fa";
+import { useAuth } from "../auth/AuthContext";
 import "../assets/css/Navbar.css";
 import { getShopCounts, SHOP_STORAGE_EVENT } from "../utils/shopStorage";
 
@@ -21,6 +23,7 @@ const navLinks = [
 function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [counts, setCounts] = useState({ cart: 0, favorites: 0 });
 
   useEffect(() => {
@@ -133,24 +136,46 @@ function Navbar() {
                   <span className="autoc-nav__badge">{counts.cart}</span>
                 )}
               </Link>
-              <Link
-                to="/login"
-                className={`autoc-nav__login ${
-                  location.pathname === "/login" ? "active" : ""
-                }`}
-              >
-                <FaSignInAlt aria-hidden="true" />
-                <span>Login</span>
-              </Link>
-              <Link
-                to="/register"
-                className={`autoc-nav__cta ${
-                  location.pathname === "/register" ? "active" : ""
-                }`}
-              >
-                <FaUserPlus aria-hidden="true" />
-                <span>Register</span>
-              </Link>
+              {user ? (
+                <Link
+                  to="/profile"
+                  className={`autoc-nav__login ${
+                    location.pathname === "/profile" ? "active" : ""
+                  }`}
+                >
+                  {user.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt={user.name}
+                      className="autoc-nav__avatar"
+                    />
+                  ) : (
+                    <FaUser aria-hidden="true" />
+                  )}
+                  <span>Profile</span>
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className={`autoc-nav__login ${
+                      location.pathname === "/login" ? "active" : ""
+                    }`}
+                  >
+                    <FaSignInAlt aria-hidden="true" />
+                    <span>Login</span>
+                  </Link>
+                  <Link
+                    to="/register"
+                    className={`autoc-nav__cta ${
+                      location.pathname === "/register" ? "active" : ""
+                    }`}
+                  >
+                    <FaUserPlus aria-hidden="true" />
+                    <span>Register</span>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

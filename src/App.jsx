@@ -1,6 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
 
+// Auth
+import { AuthProvider } from "./auth/AuthContext";
+
 // Components
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -44,11 +47,12 @@ function Layout() {
 
 function App() {
   return (
-    <Router>
-      <Routes>
+    <AuthProvider>
+      <Router>
+        <Routes>
 
-        {/* ================= WEBSITE ================= */}
-        <Route path="/" element={<Layout />}>
+          {/* ================= WEBSITE ================= */}
+          <Route path="/" element={<Layout />}>
 
           <Route index element={<Home />} />
 
@@ -81,8 +85,9 @@ function App() {
 
         </Route>
 
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

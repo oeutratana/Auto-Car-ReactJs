@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaSignInAlt } from "react-icons/fa";
+import { useAuth } from "./AuthContext";
 import "../assets/css/Auth.css";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,6 +23,7 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    login(formData.email, formData.password);
     navigate("/profile");
   };
 

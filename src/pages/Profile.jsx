@@ -1,24 +1,67 @@
-import React, { useState } from "react";
-import { FaUser, FaEnvelope, FaPhone, FaSignOutAlt } from "react-icons/fa";
-import "../assets/css/Profile.css"; // optional CSS
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaSignOutAlt,
+  FaCamera,
+} from "react-icons/fa";
+import { useAuth } from "../auth/AuthContext";
+import "../assets/css/Profile.css";
+
+const DEFAULT_AVATAR =
+  "https://i.pinimg.com/736x/32/9b/54/329b54d07444f009b0634f438db9a449.jpg";
 
 function Profile() {
-  const [user, setUser] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+1 234 567 890",
-    avatar: "https://i.pravatar.cc/150?img=3",
+  const { user, logout, updateProfile } = useAuth();
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+
+  const [formData, setFormData] = useState({
+    name: user?.name || "",
+    email: user?.email || "",
+    phone: user?.phone || "+1 234 567 890",
   });
+
+  const [avatar, setAvatar] = useState(user?.avatar || DEFAULT_AVATAR);
+  const [preview, setPreview] = useState(user?.avatar || "");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Please select a valid image file.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreview(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSave = (e) => {
     e.preventDefault();
-    console.log("Saved user data:", user);
+    updateProfile({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      avatar: preview || avatar,
+    });
     alert("Profile updated successfully!");
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -31,19 +74,38 @@ function Profile() {
             <div className="card shadow-lg p-4 rounded-4">
               {/* Avatar & Name */}
               <div className="text-center mb-4">
-                <img
-                  src={user.avatar}
-                  alt={user.name}
-                  className="rounded-circle profile-avatar mb-3 border border-3 border-primary"
-                  style={{ width: "120px", height: "120px", objectFit: "cover" }}
-                />
+                <div
+                  className="avatar-wrapper mx-auto mb-3"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <img
+                    src={preview || avatar}
+                    alt={formData.name}
+                    className="rounded-circle profile-avatar border border-3 border-primary"
+                    style={{
+                      width: "120px",
+                      height: "120px",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <div className="avatar-overlay">
+                    <FaCamera className="camera-icon" />
+                  </div>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{ display: "none" }}
+                  />
+                </div>
                 <h4 className="fw-bold">
                   <FaUser className="me-2 text-primary" />
-                  {user.name}
+                  {formData.name}
                 </h4>
                 <p className="text-muted">
                   <FaEnvelope className="me-2" />
-                  {user.email}
+                  {formData.email}
                 </p>
               </div>
 
@@ -58,7 +120,7 @@ function Profile() {
                     type="text"
                     className="form-control"
                     name="name"
-                    value={user.name}
+                    value={formData.name}
                     onChange={handleChange}
                   />
                 </div>
@@ -72,7 +134,7 @@ function Profile() {
                     type="email"
                     className="form-control"
                     name="email"
-                    value={user.email}
+                    value={formData.email}
                     onChange={handleChange}
                   />
                 </div>
@@ -86,7 +148,7 @@ function Profile() {
                     type="text"
                     className="form-control"
                     name="phone"
-                    value={user.phone}
+                    value={formData.phone}
                     onChange={handleChange}
                   />
                 </div>
@@ -99,7 +161,11 @@ function Profile() {
               <hr className="my-4" />
 
               <div className="text-center">
-                <button className="btn btn-outline-danger fw-bold px-4">
+                <button
+                  type="button"
+                  className="btn btn-outline-danger fw-bold px-4"
+                  onClick={handleLogout}
+                >
                   <FaSignOutAlt className="me-2" />
                   Logout
                 </button>
